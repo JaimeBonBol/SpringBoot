@@ -2,6 +2,7 @@ package com.corporativoX.cursoSpringBoot.controllers;
 
 import com.corporativoX.cursoSpringBoot.model.Customer;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -21,6 +22,16 @@ public class CustomerController {
     @GetMapping("/clientes")
     public List<Customer> getCustomers(){
         return customers;
+    }
+
+    @GetMapping("/clientes/{username}")
+    public Customer getCustomerByUsername(@PathVariable String username){
+        for (Customer customer : customers){
+            if (customer.getUserName().equalsIgnoreCase(username)){
+                return customer;
+            }
+        }
+        return null;
     }
 
 }
