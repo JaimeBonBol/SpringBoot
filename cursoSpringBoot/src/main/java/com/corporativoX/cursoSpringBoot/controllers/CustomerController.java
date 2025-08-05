@@ -38,4 +38,18 @@ public class CustomerController {
         return newCustomer;
     }
 
+    @PutMapping("/clientes")
+    public Customer putCustomer(@RequestBody Customer customer){
+        for (Customer c : customers){
+            if (c.getId() == customer.getId()){
+                c.setName(customer.getName());
+                c.setUserName(customer.getUserName());
+                c.setPassword(customer.getPassword());
+
+                return c;
+            }
+        }
+        return null;
+    }
+
 }
