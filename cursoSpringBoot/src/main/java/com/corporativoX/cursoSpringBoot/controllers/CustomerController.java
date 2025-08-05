@@ -1,9 +1,7 @@
 package com.corporativoX.cursoSpringBoot.controllers;
 
 import com.corporativoX.cursoSpringBoot.model.Customer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +30,12 @@ public class CustomerController {
             }
         }
         return null;
+    }
+
+    @PostMapping("/clientes")
+    public Customer postCustomer(@RequestBody Customer newCustomer){
+        customers.add(newCustomer);
+        return newCustomer;
     }
 
 }
