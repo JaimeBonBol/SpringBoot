@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
+    //Lista que simula una base de datos
     private List<Customer> customers = new ArrayList<>(Arrays.asList(
             new Customer(1, "Pepe Pérez", "pepepe", "contrasena123"),
             new Customer(2, "Lucía Martínez", "luciama", "contrasena456"),
@@ -45,6 +46,18 @@ public class CustomerController {
                 c.setName(customer.getName());
                 c.setUserName(customer.getUserName());
                 c.setPassword(customer.getPassword());
+
+                return c;
+            }
+        }
+        return null;
+    }
+
+    @DeleteMapping("/clientes/{id}")
+    public Customer deleteCustomer(@PathVariable int id){
+        for (Customer c : customers){
+            if (c.getId() == id){
+                customers.remove(c);
 
                 return c;
             }
