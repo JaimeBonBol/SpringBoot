@@ -59,10 +59,13 @@ public class CustomerController {
                 c.setUserName(customer.getUserName());
                 c.setPassword(customer.getPassword());
 
-                return ResponseEntity.ok("Cliente modificado correctamente: " + customer.getUserName());
+                // return ResponseEntity.ok("Cliente modificado correctamente: " + customer.getUserName());
+                return ResponseEntity.noContent().build();
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrado: " + customer.getId());
+        // return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrado: " + customer.getId());
+        return ResponseEntity.notFound().build();
+
     }
 
     // @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -72,10 +75,12 @@ public class CustomerController {
             if (c.getId() == id){
                 customers.remove(c);
 
-                return ResponseEntity.ok("Cliente eliminado con éxito: " + c.getId());
+                // return ResponseEntity.ok("Cliente eliminado con éxito: " + c.getId());
+                return ResponseEntity.noContent().build();  //Para generar un código 204, es decir, respuesta exitosa sin contenido. Simplificando lo anterior.
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrado: " + id);
+        // return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrado: " + id);
+        return ResponseEntity.notFound().build();   //Para generar un código 404, es decitr, no encontrado. Simplificando lo anterior.
     }
 
     // @RequestMapping(method = RequestMethod.PATCH)
