@@ -4,7 +4,9 @@ import com.corporativoX.cursoSpringBoot.model.Customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +48,16 @@ public class CustomerController {
     public ResponseEntity<?> postCustomer(@RequestBody Customer newCustomer){
         customers.add(newCustomer);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("El cliente " + newCustomer.getUserName() + " creado con éxito");
+        URI location = ServletUriComponentsBuilder  // Construcción de URI
+                .fromCurrentRequest()   // Obtener la URI base.
+                .path("/{username}")    // Agregar endpoint dinámico. Que cambiar´ña por el username del nuevo usuario que creamos con el método POST.
+                .buildAndExpand(newCustomer.getUserName())  // Coge el valor proporcionado y lo insreta en username.
+                .toUri();   // Finalizar la construcción y lo convierte a objeto URI, la URI resultante apunta al nuevo objeto creado con POST.
+
+
+        return ResponseEntity.created(location).body(newCustomer);
+        // return ResponseEntity.created(location).build();
+        // return ResponseEntity.status(HttpStatus.CREATED).body("El cliente " + newCustomer.getUserName() + " creado con éxito");
         // return newCustomer;
     }
 
