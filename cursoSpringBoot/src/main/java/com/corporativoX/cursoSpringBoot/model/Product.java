@@ -4,19 +4,18 @@ public class Product {
 
     // Atributos. Cunado utilizamos un framework, usar tipos de datos referenciales en lugar de primitivos es considerado buenas prácticas
     private Integer id;
-    private String nombre;
-    private Double precio;
+    private String name;
+    private Double price;
     private Integer stock;
 
-    public Product(Integer id, String nombre, Double precio, Integer stock) {
+    public Product(Integer id, String name, Double price, Integer stock) {
         this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
+        this.name = name;
+        this.price = price;
         this.stock = stock;
     }
 
     // Getters y Setters
-
 
     public Integer getId() {
         return id;
@@ -26,20 +25,20 @@ public class Product {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Double getPrecio() {
-        return precio;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Integer getStock() {
