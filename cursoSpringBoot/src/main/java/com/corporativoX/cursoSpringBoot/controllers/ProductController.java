@@ -1,5 +1,6 @@
 package com.corporativoX.cursoSpringBoot.controllers;
 
+import com.corporativoX.cursoSpringBoot.configurations.ExternalizedConfigurations;
 import com.corporativoX.cursoSpringBoot.model.Product;
 import com.corporativoX.cursoSpringBoot.service.ProductService;
 import com.corporativoX.cursoSpringBoot.service.ProductsServiceImpl;
@@ -23,8 +24,13 @@ public class ProductController {
     /*@Qualifier("listResourceService")*/
     private ProductService productsService;
 
+    @Autowired
+    private ExternalizedConfigurations externalizedConfigurations;
+
     @GetMapping
     public ResponseEntity<?> getproducts(){
+
+        System.out.println(externalizedConfigurations);
         List<Product> products = productsService.getProducts();
 
         return ResponseEntity.ok(products);
