@@ -18,7 +18,7 @@ public class ProductController {
 
     // Inyección de Dependencia
     @Autowired
-    @Qualifier("listResourceService")
+    /*@Qualifier("listResourceService")*/
     private ProductService productsService;
 
     @GetMapping

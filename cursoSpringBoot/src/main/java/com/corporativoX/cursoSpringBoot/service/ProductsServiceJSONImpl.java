@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.io.IOException;
 import java.util.List;
 
 // @Primary
-@Service("jsonResourceService")
+@Service
+@ConditionalOnProperty(name = "service.products", havingValue = "json")
 public class ProductsServiceJSONImpl implements ProductService{
 
     @Override
