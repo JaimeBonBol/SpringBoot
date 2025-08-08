@@ -15,7 +15,9 @@ import java.util.List;
 @RequestMapping("/productos")
 public class ProductController {
 
-    private ProductService productsService = new ProductsServiceImpl();
+    // Instancia de clase
+    @Autowired
+    private ProductService productsService;
 
     @GetMapping
     public ResponseEntity<?> getproducts(){
