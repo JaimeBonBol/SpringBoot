@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
-@Primary
-@Service
+// @Primary
+@Service("jsonResourceService")
 public class ProductsServiceJSONImpl implements ProductService{
 
     @Override
