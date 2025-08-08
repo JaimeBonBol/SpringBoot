@@ -15,6 +15,9 @@ public class Product {
         this.stock = stock;
     }
 
+    public Product() {
+    }
+
     // Getters y Setters
 
     public Integer getId() {

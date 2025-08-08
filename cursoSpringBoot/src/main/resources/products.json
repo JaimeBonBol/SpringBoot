@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Monitor",
+    "price": 120.5,
+    "stock": 8
+  },
+  {
+    "id": 2,
+    "name": "Tablet",
+    "price": 250.99,
+    "stock": 12
+  },
+  {
+    "id": 3,
+    "name": "Teclado",
+    "price": 15.25,
+    "stock": 20
+  },
+  {
+    "id": 4,
+    "name": "Altavoz",
+    "price": 58.00,
+    "stock": 25
+  }
+]
