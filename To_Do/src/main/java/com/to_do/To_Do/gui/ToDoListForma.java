@@ -44,6 +44,9 @@ public class ToDoListForma extends JFrame {
                 loadTaskSelected();
             }
         });
+        deleteTaskButton.addActionListener(actionEvent -> {
+            deleteTask();
+        });
     }
 
     /**
@@ -104,6 +107,21 @@ public class ToDoListForma extends JFrame {
      * Si hay idTaskSelected, actualiza la tarea.
      */
     private void saveTask(){
+        // Comprobar que el textField del texto no esté vacío para guardar una nueva tarea, por tanto es un campño obligatorio.
+        if (titleText.getText().equals("")){
+            showMessage("Proporciona un título");
+            titleText.requestFocusInWindow();
+            return;
+        }
+
+        // Comprobar que el textField de la fecha de entrega no esté vacío para guardar una tarea, por tanto es un campo
+        // obligatorio
+        if (dueDateText.getText().equals("")){
+            showMessage("Proporciona fecha de entrega");
+            dueDateText.requestFocusInWindow();
+            return;
+        }
+
         //Recuperar datos de los cmapos de texto.
         String title = this.titleText.getText();
         String description = this.descriptionText.getText();
@@ -140,6 +158,32 @@ public class ToDoListForma extends JFrame {
     }
 
     /**
+     * Método para eliminar tarea
+     */
+    private void deleteTask(){
+        // Obtener el renglón de la tabla seleccionado.
+        int row = taskTable.getSelectedRow();
+
+        if (row != -1){
+            // Recuperar el id
+            this.idTaskSelected = (Integer) taskTableModel.getValueAt(row, 0);
+
+            // Crear un objeto de tarea y asignarle el id recuperado.
+            Task taskDel = new Task();
+            taskDel.setId(idTaskSelected);
+
+            // ELiminar tarea y mostrar mensaje
+            taskService.deleteTask(taskDel.getId());
+            showMessage("Tarea con id " + taskDel.getId() + " eliminada");
+
+            clearForm();
+            listTasks();
+        }else {
+            showMessage("Debe seleccionar una tarea");
+        }
+    }
+
+    /**
      * Método para limpiar el fomrulario
      */
     private void clearForm(){
@@ -149,5 +193,9 @@ public class ToDoListForma extends JFrame {
         dueDateText.setText("");
         idTaskSelected = null;
         taskTable.clearSelection();
+    }
+
+    private void showMessage(String message){
+        JOptionPane.showMessageDialog(this, message);
     }
 }
