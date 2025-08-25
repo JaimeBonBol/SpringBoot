@@ -47,6 +47,9 @@ public class ToDoListForma extends JFrame {
         deleteTaskButton.addActionListener(actionEvent -> {
             deleteTask();
         });
+        cleanButton.addActionListener(actionEvent -> {
+            clearForm();
+        });
     }
 
     /**
@@ -66,12 +69,22 @@ public class ToDoListForma extends JFrame {
      */
     private void createUIComponents() {
         // TODO: place custom component creation code here
+        // this.taskTableModel = new DefaultTableModel(0,5);
 
-        this.taskTableModel = new DefaultTableModel(0,5);
+        // Evitar la edición de los valores de las celdas de la tabla
+        this.taskTableModel = new DefaultTableModel(0,5){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         String[] headersTable = {"Id", "Title", "Descripton", "Completed", "Due Date"};
         this.taskTableModel.setColumnIdentifiers(headersTable);
 
         this.taskTable = new JTable(taskTableModel);
+
+        // Resringir la selección de la tabla a un solo registro.
+        this.taskTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // Listar las tareas en la tabla.
         listTasks();
@@ -135,7 +148,14 @@ public class ToDoListForma extends JFrame {
         newTask.setCompleted(completed);
         newTask.setDueDate(dueDate);
 
+        // Guardar o actualizar tarea y mostrar mensaje
         taskService.saveTask(newTask);
+        if (idTaskSelected ==  null){
+            showMessage("Tarea agregada con éxito");
+        }else {
+            showMessage("Se actualizó la tarea con id " + idTaskSelected);
+        }
+
         clearForm();
         listTasks();
     }
@@ -192,7 +212,7 @@ public class ToDoListForma extends JFrame {
         completedCheckBox.setSelected(false);
         dueDateText.setText("");
         idTaskSelected = null;
-        taskTable.clearSelection();
+        taskTable.clearSelection(); // Deseleccionar renglón.
     }
 
     private void showMessage(String message){
