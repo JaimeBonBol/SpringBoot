@@ -1,24 +1,24 @@
 package com.gestor_inventario.controlador;
 
-import com.gestor_inventario.GestorInventarioApplication;
 import com.gestor_inventario.modelo.Producto;
 import com.gestor_inventario.servicio.ProductoServicio;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -26,9 +26,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-public class ProductosViewControlador implements Initializable {
+public class GestionViewControlador implements Initializable {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductosViewControlador.class);
+
 
     @Autowired
     private ProductoServicio productoServicio;
@@ -36,6 +37,9 @@ public class ProductosViewControlador implements Initializable {
     /**
      * Mapeo componentes vista
      */
+
+    @FXML
+    private Button volverBoton;
 
     @FXML
     private TableView<Producto> productosTabla;
@@ -52,9 +56,6 @@ public class ProductosViewControlador implements Initializable {
     @FXML
     private TableColumn<Producto, Float> precioProductoColumna;
 
-    @FXML
-    private Button gestionBoton;
-
     /**
      * ObservableList para que cualquier cambio sobre esta lista se refleje de manera automática
      */
@@ -62,11 +63,8 @@ public class ProductosViewControlador implements Initializable {
 
     private final ApplicationContext context;
 
-    // Atributo para asiganr contraseña
-    private final String PASSWORD = "1234";
-
     // Inyección por constructor
-    public ProductosViewControlador(ApplicationContext context) {
+    public GestionViewControlador(ApplicationContext context) {
         this.context = context;
     }
 
@@ -78,6 +76,7 @@ public class ProductosViewControlador implements Initializable {
         configurarColumnas();
 
         listarProductos();
+
     }
 
     /**
@@ -107,60 +106,26 @@ public class ProductosViewControlador implements Initializable {
         productosTabla.setItems(productosLista);
     }
 
-    /**
-     * Método asosciado al boton para cambiar de ventana, primero crea una ventana emergente que solicita autenticación
-     * y si esta es correcta llama al método de abrirGestion que es el que realmente cambia la vista.
-     */
-    @FXML
-    public void gestionProductos() {
-        // Crear el diálogo de contraseña
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Autenticación requerida");
-        dialog.setHeaderText("Introduce la contraseña para acceder a la gestión");
-        dialog.setContentText("Contraseña:");
-
-        // Mostrar el diálogo y esperar respuesta
-        dialog.showAndWait().ifPresent(password -> {
-            // Comprobar la contraseña
-            if (password.equals(PASSWORD)) {
-                // Contraseña correcta, cambiar la ventana
-                try {
-                    abrirGestion();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                // Contraseña incorrecta, mostrar alerta
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Contraseña incorrecta");
-                alert.showAndWait();
-            }
-        });
-    }
-
 
     /**
-     * Método para cambiar la vista, lo que hace es crear una nueva escena con la plantilla gestionview.fxml y la sustituye
-     * en la escena donde se encuentra el boton.
+     * Método asociado al botón dsew voover para volver a la pantalla anterior, es decir obtiene la escena actual del botón
+     * desde donde se actua y cambia la escena a productosview.fxml
      * @throws IOException
      */
-    public void abrirGestion() throws IOException {
-
-        // Cargar el FXML de gestión de productos
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/gestionview.fxml"));
-        loader.setControllerFactory(context::getBean); // Integrar Spring con JavaFX
+    public void inventarioProductos() throws IOException {
+        // Cargar FXML de productosView
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/productosview.fxml"));
+        loader.setControllerFactory(context::getBean);
 
         Parent root = loader.load();
         Scene escena = new Scene(root);
 
-        // Obtener el Stage actual desde el botón
-        Stage stage = (Stage) gestionBoton.getScene().getWindow();
+        // Obtener el Stage Actual desde el botón
+        Stage stage = (Stage) volverBoton.getScene().getWindow();
 
         // Reemplazar la escena actual
         stage.setScene(escena);
-        stage.setTitle("Gestión de Inventario");
+        stage.setTitle("Inventario Productos");
+}
 
-    }
 }

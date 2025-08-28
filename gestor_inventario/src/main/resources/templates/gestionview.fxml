@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="562.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestor_inventario.controlador.GestionViewControlador">
+   <children>
+      <AnchorPane layoutY="461.0" prefHeight="101.0" prefWidth="732.0">
+         <children>
+            <Button fx:id="volverBoton" layoutX="644.0" layoutY="38.0" mnemonicParsing="false" onAction="#inventarioProductos" text="Volver" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="productosTabla" layoutX="359.0" layoutY="101.0" prefHeight="223.0" prefWidth="302.0">
+        <columns>
+          <TableColumn fx:id="idProductoColumna" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="nombreProductoColumna" prefWidth="75.0" text="NOMBRE" />
+            <TableColumn fx:id="stockProductoColumna" prefWidth="75.0" text="STOCK" />
+            <TableColumn fx:id="precioProductoColumna" prefWidth="75.0" text="PRECIO" />
+        </columns>
+      </TableView>
+      <Label layoutX="234.0" layoutY="25.0" text="GESTION INVENTARIO" textFill="#42a1a1">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

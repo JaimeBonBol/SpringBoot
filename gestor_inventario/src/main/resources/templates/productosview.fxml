@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="562.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestor_inventario.controlador.ProductosViewControlador">
+<AnchorPane prefHeight="562.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestor_inventario.controlador.ProductosViewControlador">
    <children>
-      <Label layoutX="212.0" layoutY="14.0" prefHeight="35.0" prefWidth="302.0" text="GESTOR DE INVENTARIO" textFill="#42a1a1">
+      <Label layoutX="181.0" layoutY="14.0" prefHeight="35.0" prefWidth="370.0" text="INVENTARIO DE PRODUCTOS" textFill="#42a1a1">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
@@ -18,5 +18,10 @@
             <TableColumn fx:id="precioProductoColumna" prefWidth="141.0" text="PRECIO" />
         </columns>
       </TableView>
+      <AnchorPane layoutX="212.0" layoutY="435.0" prefHeight="102.0" prefWidth="278.0">
+         <children>
+            <Button fx:id="gestionBoton" layoutX="69.0" layoutY="31.0" mnemonicParsing="false" onAction="#gestionProductos" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: #1d3557;" text="Gestion Productos" textFill="#f1faee" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

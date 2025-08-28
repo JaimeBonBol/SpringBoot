@@ -29,7 +29,7 @@ public class GestorInventarioFx extends Application {
 
         Scene escena = new Scene(loader.load());
 
-        stage.setTitle("Gestor de Inventario");
+        stage.setTitle("Inventario Productos");
         stage.setScene(escena);
         stage.show();
     }
