@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="562.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestor_inventario.controlador.ProductosViewControlador">
+   <children>
+      <Label layoutX="212.0" layoutY="14.0" prefHeight="35.0" prefWidth="302.0" text="GESTOR DE INVENTARIO" textFill="#42a1a1">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
+      <TableView fx:id="productosTabla" layoutX="98.0" layoutY="79.0" prefHeight="340.0" prefWidth="531.0">
+        <columns>
+          <TableColumn fx:id="idProductoColumna" prefWidth="91.0" text="ID" />
+          <TableColumn fx:id="nombreProductoColumna" prefWidth="152.0" text="NOMBRE" />
+            <TableColumn fx:id="stockProductoColumna" prefWidth="146.0" text="STOCK" />
+            <TableColumn fx:id="precioProductoColumna" prefWidth="141.0" text="PRECIO" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
