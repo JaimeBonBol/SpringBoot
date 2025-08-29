@@ -18,9 +18,10 @@
             <TableColumn fx:id="precioProductoColumna" prefWidth="141.0" text="PRECIO" />
         </columns>
       </TableView>
-      <AnchorPane layoutX="212.0" layoutY="435.0" prefHeight="102.0" prefWidth="278.0">
+      <AnchorPane layoutX="98.0" layoutY="435.0" prefHeight="102.0" prefWidth="531.0">
          <children>
-            <Button fx:id="gestionBoton" layoutX="69.0" layoutY="31.0" mnemonicParsing="false" onAction="#gestionProductos" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: #1d3557;" text="Gestion Productos" textFill="#f1faee" />
+            <Button fx:id="gestionBoton" layoutX="50.0" layoutY="31.0" mnemonicParsing="false" onAction="#gestionProductos" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: #1d3557;" text="Gestion Productos" textFill="#f1faee" />
+            <Button fx:id="gestionUsuariosBoton" layoutX="353.0" layoutY="31.0" mnemonicParsing="false" onAction="#abrirGestionUsuarios" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: #1d3557;" text="Gestion de Usuarios" textFill="#f1faee" />
          </children>
       </AnchorPane>
    </children>

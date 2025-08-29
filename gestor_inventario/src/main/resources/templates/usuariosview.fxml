@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="562.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestor_inventario.controlador.UsuariosViewControlador">
+   <children>
+      <Label layoutX="248.0" layoutY="26.0" text="GESTION USUARIOS" textFill="#42a1a1">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="usuariosTabla" layoutX="268.0" layoutY="122.0" prefHeight="262.0" prefWidth="416.0">
+        <columns>
+          <TableColumn fx:id="idUsuarioColumna" prefWidth="54.0" text="ID" />
+          <TableColumn fx:id="nombreUsuarioColumna" prefWidth="96.0" text="NOMBRE" />
+            <TableColumn fx:id="usernameUsuarioColumna" prefWidth="93.0" text="USERNAME" />
+            <TableColumn fx:id="passwordUsuarioColumna" prefWidth="93.0" text="PASSWORD" />
+            <TableColumn fx:id="rolUsuarioColumna" prefWidth="79.0" text="ROL" />
+        </columns>
+      </TableView>
+      <Button fx:id="volverBoton" layoutX="37.0" layoutY="31.0" mnemonicParsing="false" onAction="#inventarioProductos" style="-fx-background-color: #1d3557;" text="Volver" textFill="#f1faee" />
+      <AnchorPane layoutX="37.0" layoutY="122.0" prefHeight="262.0" prefWidth="200.0">
+         <children>
+            <Label layoutX="14.0" layoutY="22.0" text="Nombre">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nombreUsuarioTexto" layoutX="14.0" layoutY="40.0" />
+            <Label layoutX="14.0" layoutY="80.0" text="Username">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+            <TextField fx:id="usernameUsuarioTexto" layoutX="14.0" layoutY="98.0" />
+            <Label layoutX="14.0" layoutY="137.0" text="Password">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+            <TextField fx:id="passwordUsuarioTexto" layoutX="14.0" layoutY="155.0" />
+            <Label layoutX="14.0" layoutY="193.0" text="Rol">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+            <TextField fx:id="rolUsuarioTexto" layoutX="14.0" layoutY="211.0" />
+         </children></AnchorPane>
+      <AnchorPane layoutX="35.0" layoutY="417.0" prefHeight="109.0" prefWidth="652.0">
+         <children>
+            <Button fx:id="agregarUsuarioBoton" layoutX="40.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #1d3557;" text="Agregar" textFill="#f1faee" />
+            <Button fx:id="modificarUsuarioBoton" layoutX="180.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #1d3557;" text="Modificar" textFill="#f1faee" />
+            <Button fx:id="eliminarUsuarioBoton" layoutX="326.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #eb5858;" text="Eliminar" textFill="#f1faee" />
+            <Button layoutX="470.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #f4ff21;" text="Limpiar Formulario" />
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

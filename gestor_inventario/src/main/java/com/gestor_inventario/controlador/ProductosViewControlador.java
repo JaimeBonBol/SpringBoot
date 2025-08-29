@@ -55,6 +55,9 @@ public class ProductosViewControlador implements Initializable {
     @FXML
     private Button gestionBoton;
 
+    @FXML
+    private Button gestionUsuariosBoton;
+
     /**
      * ObservableList para que cualquier cambio sobre esta lista se refleje de manera automática
      */
@@ -161,6 +164,29 @@ public class ProductosViewControlador implements Initializable {
         // Reemplazar la escena actual
         stage.setScene(escena);
         stage.setTitle("Gestión de Inventario");
+
+    }
+
+    /**
+     * Método para cambiar la vista, lo que hace es crear una nueva escena con la plantilla usuariosview.fxml y la sustituye
+     * en la escena donde se encuentra el boton.
+     * @throws IOException
+     */
+    public void abrirGestionUsuarios() throws IOException {
+
+        // Cargar el FXML de gestión de productos
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/usuariosview.fxml"));
+        loader.setControllerFactory(context::getBean); // Integrar Spring con JavaFX
+
+        Parent root = loader.load();
+        Scene escena = new Scene(root);
+
+        // Obtener el Stage actual desde el botón
+        Stage stage = (Stage) gestionUsuariosBoton.getScene().getWindow();
+
+        // Reemplazar la escena actual
+        stage.setScene(escena);
+        stage.setTitle("Gestión de Usuarios");
 
     }
 }

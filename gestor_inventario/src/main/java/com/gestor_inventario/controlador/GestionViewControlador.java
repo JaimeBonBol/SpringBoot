@@ -95,7 +95,7 @@ public class GestionViewControlador implements Initializable {
 
     /**
      * Metodo para mapear los atributos FMXL con los de nuestra entidad
-     * Tienen que ser exactamente los mismos nombres de los atributos de la clase modelo Tarea
+     * Tienen que ser exactamente los mismos nombres de los atributos de la clase modelo Producto
      */
     public void configurarColumnas(){
         idProductoColumna.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
