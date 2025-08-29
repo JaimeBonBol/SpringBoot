@@ -9,10 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -56,12 +53,23 @@ public class GestionViewControlador implements Initializable {
     @FXML
     private TableColumn<Producto, Float> precioProductoColumna;
 
+    @FXML
+    private TextField nombreProductoTexto;
+
+    @FXML
+    private TextField stockProductoTexto;
+
+    @FXML
+    private TextField precioProductoTexto;
+
     /**
      * ObservableList para que cualquier cambio sobre esta lista se refleje de manera automática
      */
     protected final ObservableList<Producto> productosLista = FXCollections.observableArrayList();
 
     private final ApplicationContext context;
+
+    private Integer idProductoInterno;
 
     // Inyección por constructor
     public GestionViewControlador(ApplicationContext context) {
@@ -126,6 +134,88 @@ public class GestionViewControlador implements Initializable {
         // Reemplazar la escena actual
         stage.setScene(escena);
         stage.setTitle("Inventario Productos");
-}
+    }
+
+    /**
+     * Método para limpiar formulario y resetear el ID de la variable creada interna, para que no haya problemas ya que
+     * dependiendo del valor de esta, se agregará nuevo prodcuto o se modificará.
+     */
+    public void limpiarFormulario(){
+        idProductoInterno = null;   // Asegurar que se resetea el id interno
+        nombreProductoTexto.clear();
+        stockProductoTexto.clear();
+        precioProductoTexto.clear();
+    }
+
+    /**
+     * Método para mostrar mensajes
+     */
+    public void mostrarMensaje(String titulo, String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    /**
+     * Método para cargar un producto en los textFields desde la tabla al clickar en una fila. Rellena los textField.
+     */
+    public void cargarProductoTabla(){
+        // Recoger el objeto seleccionado
+        Producto producto = productosTabla.getSelectionModel().getSelectedItem();
+
+        // Por si da click en otra parte de la tabla se comprueba que no sea nul.
+        // Se carga en nuestra variable id interna el valor de la id y en los TextFields los atributos del producto seleccionado.
+        if (producto != null){
+            idProductoInterno = producto.getIdProducto();
+            nombreProductoTexto.setText(producto.getNombre());
+            stockProductoTexto.setText(String.valueOf(producto.getStock()));
+            precioProductoTexto.setText(String.valueOf(producto.getPrecio()));
+        }
+    }
+
+    /**
+     * Método para asignar a un producto los datos de los textFIelds.
+     * @param producto
+     */
+    public void recolectarDatosProducto(Producto producto){
+        // Si el producto ya existe, entonces la variable idProductoInterno tiene un valor, si no existe no se asigna ningún
+        // valor a la id interna y por lo tanto se creará nuevo producto.
+        if (idProductoInterno != null){
+            producto.setIdProducto(idProductoInterno);
+        }
+
+        producto.setNombre(nombreProductoTexto.getText());
+        producto.setStock(Integer.valueOf(stockProductoTexto.getText()));
+        producto.setPrecio(Float.valueOf(precioProductoTexto.getText()));
+    }
+
+    /**
+     * Método para agregar un nuevo producto, se comprueba que existe un nombre del producto.
+     * Se crea un objeto del tipo producto en el que a través del metodo recolectarDatos se le asignan los valores de los
+     * textFields a los atribitos del nuevbo producto. Después se guarda en la bd.
+     */
+    public void agregarProducto(){
+        if (nombreProductoTexto.getText().isEmpty()){
+            mostrarMensaje("Error Validación", "Debe proporcionar un nombre");
+            nombreProductoTexto.requestFocus();
+            return;
+        }
+
+        Producto producto = new Producto();
+        recolectarDatosProducto(producto);
+
+        // Asegurar que no haya problema con el id ya que para agregar el id tiene que ser null
+        producto.setIdProducto(null);
+
+        productoServicio.guardarProducto(producto);
+        mostrarMensaje("Información", "Producto agregado al inventario");
+
+        limpiarFormulario();
+
+        listarProductos();
+    }
 
 }

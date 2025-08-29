@@ -8,15 +8,19 @@
    <children>
       <AnchorPane layoutY="461.0" prefHeight="101.0" prefWidth="732.0">
          <children>
-            <Button fx:id="volverBoton" layoutX="644.0" layoutY="38.0" mnemonicParsing="false" onAction="#inventarioProductos" text="Volver" />
+            <Button fx:id="agregarBoton" layoutX="42.0" layoutY="38.0" mnemonicParsing="false" onAction="#agregarProducto" style="-fx-background-color: #1d3557;" text="Agregar" textFill="#f1faee" />
+            <Button fx:id="modificarBoton" layoutX="162.0" layoutY="38.0" mnemonicParsing="false" style="-fx-background-color: #1d3557;" text="Modificar" textFill="#f1faee" />
+            <Button fx:id="eliminarBoton" layoutX="281.0" layoutY="38.0" mnemonicParsing="false" style="-fx-background-color: #eb5858;" text="Eliminar" textFill="#f1faee" />
+            <Button fx:id="limpiarBoton" layoutX="398.0" layoutY="38.0" mnemonicParsing="false" style="-fx-background-color: #f4ff21;" text="Limpiar Formulario" />
+            <Button fx:id="venderBoton" layoutX="573.0" layoutY="38.0" mnemonicParsing="false" style="-fx-background-color: #6dc978;" text="Vender Producto" />
          </children>
       </AnchorPane>
-      <TableView fx:id="productosTabla" layoutX="359.0" layoutY="101.0" prefHeight="223.0" prefWidth="302.0">
+      <TableView fx:id="productosTabla" layoutX="320.0" layoutY="101.0" onMouseClicked="#cargarProductoTabla" prefHeight="289.0" prefWidth="393.0">
         <columns>
-          <TableColumn fx:id="idProductoColumna" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="nombreProductoColumna" prefWidth="75.0" text="NOMBRE" />
-            <TableColumn fx:id="stockProductoColumna" prefWidth="75.0" text="STOCK" />
-            <TableColumn fx:id="precioProductoColumna" prefWidth="75.0" text="PRECIO" />
+          <TableColumn fx:id="idProductoColumna" prefWidth="82.0" text="ID" />
+          <TableColumn fx:id="nombreProductoColumna" prefWidth="112.0" text="NOMBRE" />
+            <TableColumn fx:id="stockProductoColumna" prefWidth="104.0" text="STOCK" />
+            <TableColumn fx:id="precioProductoColumna" prefWidth="94.0" text="PRECIO" />
         </columns>
       </TableView>
       <Label layoutX="234.0" layoutY="25.0" text="GESTION INVENTARIO" textFill="#42a1a1">
@@ -24,5 +28,27 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
+      <AnchorPane layoutX="62.0" layoutY="101.0" prefHeight="289.0" prefWidth="230.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Nombre">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nombreProductoTexto" layoutX="14.0" layoutY="34.0" />
+            <Label layoutX="14.0" layoutY="87.0" prefHeight="18.0" prefWidth="42.0" text="Stock">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="stockProductoTexto" layoutX="14.0" layoutY="107.0" />
+            <Label layoutX="14.0" layoutY="160.0" prefHeight="18.0" prefWidth="48.0" text="Precio">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <TextField fx:id="precioProductoTexto" layoutX="14.0" layoutY="180.0" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="volverBoton" layoutX="43.0" layoutY="30.0" mnemonicParsing="false" onAction="#inventarioProductos" style="-fx-background-color: #1d3557;" text="Volver" textFill="#f1faee" />
    </children>
 </AnchorPane>
