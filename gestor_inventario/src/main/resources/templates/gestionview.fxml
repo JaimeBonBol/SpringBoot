@@ -9,13 +9,13 @@
       <AnchorPane layoutY="461.0" prefHeight="101.0" prefWidth="732.0">
          <children>
             <Button fx:id="agregarBoton" layoutX="42.0" layoutY="38.0" mnemonicParsing="false" onAction="#agregarProducto" style="-fx-background-color: #1d3557;" text="Agregar" textFill="#f1faee" />
-            <Button fx:id="modificarBoton" layoutX="162.0" layoutY="38.0" mnemonicParsing="false" style="-fx-background-color: #1d3557;" text="Modificar" textFill="#f1faee" />
-            <Button fx:id="eliminarBoton" layoutX="281.0" layoutY="38.0" mnemonicParsing="false" style="-fx-background-color: #eb5858;" text="Eliminar" textFill="#f1faee" />
-            <Button fx:id="limpiarBoton" layoutX="398.0" layoutY="38.0" mnemonicParsing="false" style="-fx-background-color: #f4ff21;" text="Limpiar Formulario" />
-            <Button fx:id="venderBoton" layoutX="573.0" layoutY="38.0" mnemonicParsing="false" style="-fx-background-color: #6dc978;" text="Vender Producto" />
+            <Button fx:id="modificarBoton" layoutX="162.0" layoutY="38.0" mnemonicParsing="false" onAction="#modificarProducto" style="-fx-background-color: #1d3557;" text="Modificar" textFill="#f1faee" />
+            <Button fx:id="eliminarBoton" layoutX="281.0" layoutY="38.0" mnemonicParsing="false" onAction="#eliminarProducto" style="-fx-background-color: #eb5858;" text="Eliminar" textFill="#f1faee" />
+            <Button fx:id="limpiarBoton" layoutX="398.0" layoutY="38.0" mnemonicParsing="false" onAction="#limpiarFormulario" style="-fx-background-color: #f4ff21;" text="Limpiar Formulario" />
+            <Button fx:id="ventanaVenderBoton" layoutX="573.0" layoutY="38.0" mnemonicParsing="false" onAction="#abrirVentanaVender" style="-fx-background-color: #6dc978;" text="Vender Producto" />
          </children>
       </AnchorPane>
-      <TableView fx:id="productosTabla" layoutX="320.0" layoutY="101.0" onMouseClicked="#cargarProductoTabla" prefHeight="289.0" prefWidth="393.0">
+      <TableView fx:id="productosTabla" layoutX="320.0" layoutY="101.0" onMouseClicked="#cargarProductoTabla" prefHeight="242.0" prefWidth="393.0">
         <columns>
           <TableColumn fx:id="idProductoColumna" prefWidth="82.0" text="ID" />
           <TableColumn fx:id="nombreProductoColumna" prefWidth="112.0" text="NOMBRE" />
@@ -28,7 +28,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="62.0" layoutY="101.0" prefHeight="289.0" prefWidth="230.0">
+      <AnchorPane layoutX="62.0" layoutY="101.0" prefHeight="242.0" prefWidth="230.0">
          <children>
             <Label layoutX="14.0" layoutY="14.0" text="Nombre">
                <font>
@@ -50,5 +50,10 @@
          </children>
       </AnchorPane>
       <Button fx:id="volverBoton" layoutX="43.0" layoutY="30.0" mnemonicParsing="false" onAction="#inventarioProductos" style="-fx-background-color: #1d3557;" text="Volver" textFill="#f1faee" />
+      <AnchorPane layoutX="320.0" layoutY="354.0" prefHeight="107.0" prefWidth="393.0">
+         <children>
+            <TextArea fx:id="stockBajoTexto" layoutX="34.0" layoutY="11.0" prefHeight="85.0" prefWidth="326.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

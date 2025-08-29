@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestor_inventario.controlador.VenderProductoViewControlador">
+   <children>
+      <Label layoutX="60.0" layoutY="26.0" text="VENTA DE PRODUCTO" textFill="#42a1a1">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
+      <AnchorPane layoutX="106.0" layoutY="102.0">
+         <children>
+            <Label layoutX="42.0" text="ID producto">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="idVentaProductoText" layoutY="29.0" />
+            <Label layoutX="51.0" layoutY="80.0" text="Cantidad">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cantidadVentaProductoText" layoutY="109.0" prefHeight="18.0" prefWidth="162.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="50.0" layoutY="259.0" prefHeight="82.0" prefWidth="279.0">
+         <children>
+            <Button fx:id="venderBoton" layoutX="47.0" layoutY="28.0" mnemonicParsing="false" onAction="#venderProducto" style="-fx-background-color: #6dc978;" text="Vender" />
+            <Button fx:id="cancelarVentaBoton" layoutX="167.0" layoutY="28.0" mnemonicParsing="false" onAction="#cerrarVentana" style="-fx-background-color: #eb5858;" text="Cancelar" textFill="#f1faee" />
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Component
@@ -62,6 +64,9 @@ public class GestionViewControlador implements Initializable {
     @FXML
     private TextField precioProductoTexto;
 
+    @FXML
+    private TextArea stockBajoTexto;
+
     /**
      * ObservableList para que cualquier cambio sobre esta lista se refleje de manera automática
      */
@@ -75,6 +80,7 @@ public class GestionViewControlador implements Initializable {
     public GestionViewControlador(ApplicationContext context) {
         this.context = context;
     }
+
 
 
     @Override
@@ -112,6 +118,33 @@ public class GestionViewControlador implements Initializable {
 
         // Relacionar la lista a la tabla de la vista (agregar la información a la tabla)
         productosTabla.setItems(productosLista);
+
+        // Muestra en un textArea los productos con stock bajo
+        mostrarProductosStockBajo();
+
+    }
+
+    /**
+     * Método que muestra en un TextArea los productos que tienen el stock bajo.
+     */
+    public void mostrarProductosStockBajo(){
+        // Recuperar los productos que tienen el stock bajo
+        List<Producto> productosStockBajo = productoServicio.listarProductosConStockBajo();
+
+        // Para que no se pueda editar y solo muestre información.
+        stockBajoTexto.setEditable(false);
+
+        // Almaceno la información en el sb.
+        StringBuilder sb = new StringBuilder();
+
+        for (Producto producto : productosStockBajo){
+            sb.append(producto.getNombre() + " con id " + producto.getIdProducto() + " tiene stock bajo: " + producto.getStock() + " unidades");
+            sb.append("\n");
+        }
+
+        // Agregar el texto del sb al TextArea
+        stockBajoTexto.setText(sb.toString());
+        stockBajoTexto.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
     }
 
 
@@ -216,6 +249,68 @@ public class GestionViewControlador implements Initializable {
         limpiarFormulario();
 
         listarProductos();
+    }
+
+    public void modificarProducto(){
+        // Comprobar que realmente se va a modificar, para ello se comprueba si idInterna tiene valor (es decir si se
+        // ha clickado sobre un producto y se ha cargado la id en la variable idInterna)
+        if (idProductoInterno == null){
+            mostrarMensaje("Información", "Debe selecionar un producto");
+            return;
+        }
+        // Se comprueba si se ha proporcionado nombre del producto a modificar
+        if (nombreProductoTexto.getText().isEmpty()){
+            mostrarMensaje("Error Validación", "Debe proporcionar un producto");
+            nombreProductoTexto.requestFocus();
+            return;
+        }
+
+        Producto producto = new Producto();
+        recolectarDatosProducto(producto);
+
+        // Hibernate guarda un nuveo producto o modifica automáticamente dependiendo si el id es null o no.
+        productoServicio.guardarProducto(producto);
+        mostrarMensaje("Información", "Producto con id " + idProductoInterno + " modificado");
+
+        limpiarFormulario();
+        listarProductos();
+    }
+
+    /**
+     * Método para eliminar producto seleccionado.
+     */
+    public void eliminarProducto(){
+        // Obtener el producto seleccionado
+        Producto producto = productosTabla.getSelectionModel().getSelectedItem();
+
+        if (producto != null && !nombreProductoTexto.getText().isEmpty()){
+            productoServicio.eliminarProducto(producto);
+            mostrarMensaje("Información", "Producto con id " + producto.getIdProducto() + " eliminado");
+
+            limpiarFormulario();
+            listarProductos();
+        }else {
+            mostrarMensaje("Error", "No se ha seleccionado ningún producto");
+        }
+    }
+
+    /**
+     * Método asociado al botón de vender para abrir la ventana para vender producto.
+     */
+    public void abrirVentanaVender() throws IOException {
+        // Cargar el FXML de vender productos
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/venderproductoview.fxml"));
+        loader.setControllerFactory(context::getBean); // Integrar Spring con JavaFX
+
+        Parent root = loader.load();
+        Scene escena = new Scene(root);
+
+        Stage stage = new Stage();
+        stage.setTitle("Venta Producto");
+        stage.setScene(escena);
+        stage.initModality(Modality.APPLICATION_MODAL); // Bloquea hasta cerrar
+        stage.showAndWait();
+
     }
 
 }
