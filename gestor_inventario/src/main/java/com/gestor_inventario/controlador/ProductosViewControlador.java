@@ -2,7 +2,9 @@ package com.gestor_inventario.controlador;
 
 import com.gestor_inventario.GestorInventarioApplication;
 import com.gestor_inventario.modelo.Producto;
+import com.gestor_inventario.modelo.Usuario;
 import com.gestor_inventario.servicio.ProductoServicio;
+import com.gestor_inventario.sesion.SesionServicio;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +35,9 @@ public class ProductosViewControlador implements Initializable {
 
     @Autowired
     private ProductoServicio productoServicio;
+
+    @Autowired
+    private SesionServicio sesionServicio;
 
     /**
      * Mapeo componentes vista
@@ -58,6 +64,15 @@ public class ProductosViewControlador implements Initializable {
     @FXML
     private Button gestionUsuariosBoton;
 
+    @FXML
+    private Button loginBoton;
+
+    @FXML
+    private Button logoutBoton;
+
+    @FXML
+    private TextField sesionUsuarioTexto;
+
     /**
      * ObservableList para que cualquier cambio sobre esta lista se refleje de manera automática
      */
@@ -81,6 +96,8 @@ public class ProductosViewControlador implements Initializable {
         configurarColumnas();
 
         listarProductos();
+
+        mostrarSesion();
     }
 
     /**
@@ -111,36 +128,39 @@ public class ProductosViewControlador implements Initializable {
     }
 
     /**
-     * Método asosciado al boton para cambiar de ventana, primero crea una ventana emergente que solicita autenticación
-     * y si esta es correcta llama al método de abrirGestion que es el que realmente cambia la vista.
+     * Método para mostrar mensajes
      */
-    @FXML
-    public void gestionProductos() {
-        // Crear el diálogo de contraseña
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Autenticación requerida");
-        dialog.setHeaderText("Introduce la contraseña para acceder a la gestión");
-        dialog.setContentText("Contraseña:");
+    public void mostrarMensaje(String titulo, String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
 
-        // Mostrar el diálogo y esperar respuesta
-        dialog.showAndWait().ifPresent(password -> {
-            // Comprobar la contraseña
-            if (password.equals(PASSWORD)) {
-                // Contraseña correcta, cambiar la ventana
-                try {
-                    abrirGestion();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                // Contraseña incorrecta, mostrar alerta
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Contraseña incorrecta");
-                alert.showAndWait();
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    /**
+     * Método asosciado al boton para cambiar de ventana, primero comprueba el usuario logeado
+     * y si tiene permisos llama al método de abrirGestion que es el que realmente cambia la vista.
+     */
+    public void gestionProductos() throws IOException {
+
+        // Obtener el usuario logeado
+        Usuario usuario = sesionServicio.getUsuarioLogeado();
+
+        // Comprobar que la sesión está iniciada
+        if (usuario != null){
+            // Si el rol es ADMIN u OPERARIO entonces tiene permisos para entrar, de lo contrario no tiene pemrisos.
+            if (usuario.getRol().equals("ADMIN") || usuario.getRol().equals("OPERARIO")){
+                mostrarMensaje("Información", "Entrando a la gestión de inventario como " + usuario.getUsername() + " con el rol " + usuario.getRol());
+                abrirGestion();
+            }else {
+                mostrarMensaje("Error", "No tiene permisos para la acción");
             }
-        });
+        }else {
+            mostrarMensaje("Información", "Debe iniciar sesión");
+        }
+
     }
 
 
@@ -174,19 +194,101 @@ public class ProductosViewControlador implements Initializable {
      */
     public void abrirGestionUsuarios() throws IOException {
 
-        // Cargar el FXML de gestión de productos
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/usuariosview.fxml"));
+        // Obtener el usuario logeado
+        Usuario usuario = sesionServicio.getUsuarioLogeado();
+
+        // Comprobar que la sesión está iniciada
+        if (usuario !=null){
+            // Si el usuario es ADMIN entonces tiene permisos, de lo contrario no los tiene.
+            if (usuario.getRol().equals("ADMIN")){
+
+                mostrarMensaje("Información", "Entrando a la gestión de usuarios como " + usuario.getUsername() + " con el rol " + usuario.getRol());
+
+                // Cargar el FXML de gestión de productos
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/usuariosview.fxml"));
+                loader.setControllerFactory(context::getBean); // Integrar Spring con JavaFX
+
+                Parent root = loader.load();
+                Scene escena = new Scene(root);
+
+                // Obtener el Stage actual desde el botón
+                Stage stage = (Stage) gestionUsuariosBoton.getScene().getWindow();
+
+                // Reemplazar la escena actual
+                stage.setScene(escena);
+                stage.setTitle("Gestión de Usuarios");
+            }else {
+                mostrarMensaje("Error", "No tiene permisos para la acción");
+
+            }
+        }else {
+            mostrarMensaje("Información", "Debe iniciar sesión");
+        }
+
+    }
+
+    /**
+     * Método asociado al botón login para abrir la ventana de login.
+     */
+    public void abrirVentanaLogin() throws IOException {
+        // Cargar el FXML de login
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/loginview.fxml"));
         loader.setControllerFactory(context::getBean); // Integrar Spring con JavaFX
 
         Parent root = loader.load();
         Scene escena = new Scene(root);
 
-        // Obtener el Stage actual desde el botón
-        Stage stage = (Stage) gestionUsuariosBoton.getScene().getWindow();
-
-        // Reemplazar la escena actual
+        Stage stage = new Stage();
+        stage.setTitle("Login Usuario");
         stage.setScene(escena);
-        stage.setTitle("Gestión de Usuarios");
+        stage.initModality(Modality.APPLICATION_MODAL); // Bloquea hasta cerrar
+        stage.showAndWait();
+
+        // Cuando la ventana de login se cierra, se actualiza el textField con la sesión
+        mostrarSesion();
+    }
+
+    /**
+     * Método para mostrar la sesión en un TextField
+     */
+    public void mostrarSesion(){
+
+        Usuario usuario = sesionServicio.getUsuarioLogeado();
+
+        // Hacer que el textField no sea editable
+        sesionUsuarioTexto.setEditable(false);
+
+        if (usuario != null){
+            sesionUsuarioTexto.setText("Sesión: " + usuario.getUsername());
+            mostrarLogout();
+        }else {
+            sesionUsuarioTexto.setText("No hay sesión iniciada");
+        }
 
     }
+
+    /**
+     * Método para ocultar el boton de login (ya esta la sesión iniciada) y mostrar el botón de logout
+     */
+    public void mostrarLogout(){
+        loginBoton.setVisible(false);
+        logoutBoton.setVisible(true);
+    }
+
+    /**
+     * Método llamado desde el botón de logout de la vista para cerrar sesión
+     */
+    public void logout(){
+        // Llama al método logout del servicio de la sesión que pone el usuarioLogeado a null
+        sesionServicio.logout();
+
+        // Actualiza el texto de la sesión.
+        mostrarSesion();
+
+        // Vuelve a mostrar el boton de login y a ocultar el de logout
+        loginBoton.setVisible(true);
+        logoutBoton.setVisible(false);
+    }
+
+
 }

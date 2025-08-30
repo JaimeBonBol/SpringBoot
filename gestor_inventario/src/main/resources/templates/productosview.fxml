@@ -10,7 +10,7 @@
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
-      <TableView fx:id="productosTabla" layoutX="98.0" layoutY="79.0" prefHeight="340.0" prefWidth="531.0">
+      <TableView fx:id="productosTabla" layoutX="98.0" layoutY="111.0" prefHeight="340.0" prefWidth="531.0">
         <columns>
           <TableColumn fx:id="idProductoColumna" prefWidth="91.0" text="ID" />
           <TableColumn fx:id="nombreProductoColumna" prefWidth="152.0" text="NOMBRE" />
@@ -18,11 +18,14 @@
             <TableColumn fx:id="precioProductoColumna" prefWidth="141.0" text="PRECIO" />
         </columns>
       </TableView>
-      <AnchorPane layoutX="98.0" layoutY="435.0" prefHeight="102.0" prefWidth="531.0">
+      <AnchorPane layoutX="98.0" layoutY="473.0" prefHeight="80.0" prefWidth="531.0">
          <children>
-            <Button fx:id="gestionBoton" layoutX="50.0" layoutY="31.0" mnemonicParsing="false" onAction="#gestionProductos" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: #1d3557;" text="Gestion Productos" textFill="#f1faee" />
-            <Button fx:id="gestionUsuariosBoton" layoutX="353.0" layoutY="31.0" mnemonicParsing="false" onAction="#abrirGestionUsuarios" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: #1d3557;" text="Gestion de Usuarios" textFill="#f1faee" />
+            <Button fx:id="gestionBoton" layoutX="41.0" layoutY="20.0" mnemonicParsing="false" onAction="#gestionProductos" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: #1d3557;" text="Gestion Productos" textFill="#f1faee" />
+            <Button fx:id="gestionUsuariosBoton" layoutX="353.0" layoutY="20.0" mnemonicParsing="false" onAction="#abrirGestionUsuarios" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: #1d3557;" text="Gestion de Usuarios" textFill="#f1faee" />
          </children>
       </AnchorPane>
+      <Button fx:id="loginBoton" layoutX="561.0" layoutY="14.0" mnemonicParsing="false" onAction="#abrirVentanaLogin" prefHeight="26.0" prefWidth="157.0" style="-fx-background-color: #1d3557;" text="Login" textFill="#f1faee" />
+      <TextField fx:id="sesionUsuarioTexto" layoutX="562.0" layoutY="57.0" prefHeight="26.0" prefWidth="157.0" />
+      <Button fx:id="logoutBoton" layoutX="561.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" prefHeight="26.0" prefWidth="157.0" style="-fx-background-color: #eb5858;" text="Logout" textFill="#f1faee" visible="false" />
    </children>
 </AnchorPane>

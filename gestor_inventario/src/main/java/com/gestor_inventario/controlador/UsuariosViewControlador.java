@@ -3,6 +3,7 @@ package com.gestor_inventario.controlador;
 import com.gestor_inventario.modelo.Producto;
 import com.gestor_inventario.modelo.Usuario;
 import com.gestor_inventario.servicio.UsuarioServicio;
+import com.gestor_inventario.sesion.SesionServicio;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,6 +27,9 @@ public class UsuariosViewControlador implements Initializable {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private SesionServicio sesionServicio;
 
     /**
      * Mapeo componentes vista
@@ -64,6 +68,10 @@ public class UsuariosViewControlador implements Initializable {
     @FXML
     private Button volverBoton;
 
+    @FXML
+    private TextField sesionUsuarioTexto;
+
+
     /**
      * ObservableList para que cualquier cambio sobre esta lista se refleje de manera automática
      */
@@ -86,6 +94,8 @@ public class UsuariosViewControlador implements Initializable {
         configurarColumnas();
 
         listarUsuarios();
+
+        mostrarSesion();
     }
 
     /**
@@ -268,6 +278,24 @@ public class UsuariosViewControlador implements Initializable {
         }else {
             mostrarMensaje("Error", "No se ha seleccionado ningún usuario");
         }
+    }
+
+    /**
+     * Método para mostrar la sesión en un TextField
+     */
+    public void mostrarSesion(){
+
+        Usuario usuario = sesionServicio.getUsuarioLogeado();
+
+        // Hacer que el textField no sea editable
+        sesionUsuarioTexto.setEditable(false);
+
+        if (usuario != null){
+            sesionUsuarioTexto.setText("Sesión: " + usuario.getUsername());
+        }else {
+            sesionUsuarioTexto.setText("No hay sesión iniciada");
+        }
+
     }
 
 }
