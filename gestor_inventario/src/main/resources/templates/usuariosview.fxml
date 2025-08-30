@@ -11,7 +11,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="usuariosTabla" layoutX="268.0" layoutY="122.0" prefHeight="262.0" prefWidth="416.0">
+      <TableView fx:id="usuariosTabla" layoutX="268.0" layoutY="122.0" onMouseClicked="#cargarUsuarioTabla" prefHeight="262.0" prefWidth="416.0">
         <columns>
           <TableColumn fx:id="idUsuarioColumna" prefWidth="54.0" text="ID" />
           <TableColumn fx:id="nombreUsuarioColumna" prefWidth="96.0" text="NOMBRE" />
@@ -47,10 +47,10 @@
          </children></AnchorPane>
       <AnchorPane layoutX="35.0" layoutY="417.0" prefHeight="109.0" prefWidth="652.0">
          <children>
-            <Button fx:id="agregarUsuarioBoton" layoutX="40.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #1d3557;" text="Agregar" textFill="#f1faee" />
-            <Button fx:id="modificarUsuarioBoton" layoutX="180.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #1d3557;" text="Modificar" textFill="#f1faee" />
-            <Button fx:id="eliminarUsuarioBoton" layoutX="326.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #eb5858;" text="Eliminar" textFill="#f1faee" />
-            <Button layoutX="470.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #f4ff21;" text="Limpiar Formulario" />
+            <Button fx:id="agregarUsuarioBoton" layoutX="40.0" layoutY="42.0" mnemonicParsing="false" onAction="#agregarUsuario" style="-fx-background-color: #1d3557;" text="Agregar" textFill="#f1faee" />
+            <Button fx:id="modificarUsuarioBoton" layoutX="180.0" layoutY="42.0" mnemonicParsing="false" onAction="#modificarUsuario" style="-fx-background-color: #1d3557;" text="Modificar" textFill="#f1faee" />
+            <Button fx:id="eliminarUsuarioBoton" layoutX="326.0" layoutY="42.0" mnemonicParsing="false" onAction="#eliminarUsuario" style="-fx-background-color: #eb5858;" text="Eliminar" textFill="#f1faee" />
+            <Button fx:id="limpiarFormularioBoton" layoutX="470.0" layoutY="42.0" mnemonicParsing="false" onAction="#limpiarFormulario" style="-fx-background-color: #f4ff21;" text="Limpiar Formulario" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

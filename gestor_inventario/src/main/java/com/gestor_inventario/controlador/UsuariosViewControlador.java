@@ -197,4 +197,77 @@ public class UsuariosViewControlador implements Initializable {
         usuario.setRol(rolUsuarioTexto.getText());
     }
 
+    /**
+     * Método para agregar un nuevo usuario, se compruba que existe el nombre.
+     * Se crea un objeto de tipo Usuario en el que a través del método recolectarDatosUsuario se le asignan los valores
+     * de los textsFields. Después se guarda en la bd.
+     */
+    public void agregarUsuario(){
+        if (nombreUsuarioTexto.getText().isEmpty()){
+            mostrarMensaje("Error Validación", "Debe proporcionar un nombre");
+            nombreUsuarioTexto.requestFocus();
+            return;
+        }
+
+        Usuario usuario = new Usuario();
+        recolectarDatosUsuario(usuario);
+
+        // Asegura que el id es null, ya que para agregar un nuevo usuario no tiene que tener ningún valor el id.
+        usuario.setIdUsuario(null);
+
+        usuarioServicio.guardarUsuario(usuario);
+        mostrarMensaje("Información", "Usuario agregado correctamente");
+
+        limpiarFormulario();
+        listarUsuarios();
+    }
+
+    /**
+     * Método para modifcar usuario, para ello hay que comprobar si la id interna tiene un valor, ya que eso significa que
+     * ha clickado en un usuario de la tabla y se ha cargado sus datos.
+     * Para modificar se usa el mismo método del sericio guardar usuario, la diferencia es que este si encuentra valor en
+     * la id modifica.
+     */
+    public void modificarUsuario(){
+        // Comprobar que realmente se va a modificar, para ello se comprueba si id interna tiene valor.ç
+        if (idUsuarioInterno == null){
+            mostrarMensaje("Información", "Debe seleccionar un usuario");
+            return;
+        }
+        // Se comprueba si se ha proporcionado un nombre de usuario
+        if (nombreUsuarioTexto.getText().isEmpty()){
+            mostrarMensaje("Error validación", "Debe proporcionar un nombre");
+            nombreUsuarioTexto.requestFocus();
+            return;
+        }
+
+        Usuario usuario = new Usuario();
+        recolectarDatosUsuario(usuario);
+
+        usuarioServicio.guardarUsuario(usuario);
+
+        mostrarMensaje("Información", "Usuario con id " + idUsuarioInterno + " modificado");
+
+        limpiarFormulario();
+        listarUsuarios();
+    }
+
+    /**
+     * Método para eliminar Usuario
+     */
+    public void eliminarUsuario(){
+        // Obtener el objeto de la tabla al clickar
+        Usuario usuario = usuariosTabla.getSelectionModel().getSelectedItem();
+
+        if (usuario != null && !nombreUsuarioTexto.getText().isEmpty()){
+            usuarioServicio.eliminarUsuario(usuario);
+            mostrarMensaje("Información", "Usuario con id " + usuario.getIdUsuario() + " eliminado");
+
+            limpiarFormulario();
+            listarUsuarios();
+        }else {
+            mostrarMensaje("Error", "No se ha seleccionado ningún usuario");
+        }
+    }
+
 }
